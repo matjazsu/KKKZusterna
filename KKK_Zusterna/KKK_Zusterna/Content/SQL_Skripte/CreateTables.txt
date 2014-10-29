@@ -1,0 +1,211 @@
+SQLITE skripte za kreacijo tabel KKKZusterna:
+
+1. Uporabnik:
+
+CREATE TABLE Uporabnik (
+ ID_uporabnik INT NOT NULL,
+ Ime varchar(30) NOT NULL,
+ Priimek varchar(30) NOT NULL,
+ Email varchar(64) NOT NULL,
+ Spremenil varchar(60) NULL,
+ SpremenilDatum datetime NULL,
+ Geslo varchar(256) NOT NULL,
+ Administrator INT NOT NULL,
+ PRIMARY KEY(ID_uporabnik)
+); 
+
+2. Novica:
+
+CREATE TABLE Novica (
+ ID_novica INT NOT NULL,
+ Naslov varchar(30) NOT NULL,
+ Povzetek varchar(100) NOT NULL,
+ Vsebina text NOT NULL,
+ ID_uporabnik INT NULL,
+ DatumSpremenil DATETIME NULL,
+ URLSlika varchar(50) NULL,
+ PRIMARY KEY(ID_novica)
+); 
+
+3. GalerijaKategorija:
+
+CREATE TABLE GalerijaKategorija (
+ ID_galerijaKategorija INT NOT NULL,
+ Naslov varchar(30) NOT NULL,
+ URLSlika varchar(50) NOT NULL,
+ SpremenilUporabnik varchar(30) NULL,
+ SpremenilDatum datetime NULL,
+ PRIMARY KEY(ID_galerijaKategorija)
+); 
+
+4. Galerija:
+
+CREATE TABLE Galerija (
+ ID_galerija INT NOT NULL,
+ ID_galerijaKategorija INT NOT NULL,
+ URLSlika varchar(50) NOT NULL,
+ PRIMARY KEY(ID_galerija)
+); 
+
+5. LetoRezultati:
+
+CREATE TABLE LetoRezultati (
+ ID_letoRezultati INT NOT NULL,
+ Leto varchar(30) NOT NULL,
+ Spremenil varchar(30) NULL,
+ SpremenilDatum DateTime NULL,
+ PRIMARY KEY(ID_letoRezultati)
+);
+
+6. Rezultati:
+
+CREATE TABLE Rezultati (
+ ID_rezultati INT NOT NULL,
+ Naslov varchar(30) NOT NULL,
+ Vsebina varchar(50) NULL,
+ URLFile varchar(50) NULL,
+ ID_letoRezultati INT NOT NULL,
+ Spremenil varchar(30) NULL,
+ SpremenilDatum DateTime NULL,
+ PRIMARY KEY (ID_rezultati)
+);
+
+7. LetoTekmovanja:
+
+CREATE TABLE LetoTekmovanja (
+ ID_letoTekmovanja INT NOT NULL,
+ Leto varchar(30) NOT NULL,
+ Spremenil varchar(30) NULL,
+ SpremenilDatum DateTime NULL,
+ PRIMARY KEY(ID_letoTekmovanja)
+);
+
+8. Tekmovanja:
+
+CREATE TABLE Tekmovanja (
+ ID_tekmovanja INT NOT NULL,
+ Naslov varchar(30) NOT NULL,
+ Vsebina varchar(50) NULL,
+ URLFile varchar(50) NULL,
+ ID_letoTekmovanja INT NOT NULL,
+ Spremenil varchar(30) NULL,
+ SpremenilDatum DateTime NULL,
+ PRIMARY KEY (ID_tekmovanja)
+);
+
+9. Alter table Uporabnik:
+
+ALTER TABLE Uporabnik ADD FlagPrijava INT NOT NULL DEFAULT 0; 
+ALTER TABLE Uporabnik ADD FlagNapaka INT NOT NULL DEFAULT 0;
+ALTER TABLE Uporabnik ADD FlagKontakt INT NOT NULL DEFAULT 0;
+ALTER TABLE Uporabnik ADD FlagRegistracija INT NOT NULL DEFAULT 0;
+ALTER TABLE Uporabnik ADD FlagNapakaAvtorizacija INT NOT NULL DEFAULT 0;
+ALTER TABLE Uporabnik ADD FlagONas INT NOT NULL DEFAULT 0;
+ALTER TABLE Uporabnik ADD FlagPovezave INT NOT NULL DEFAULT 0;
+ALTER TABLE Uporabnik ADD FlagTreningi INT NOT NULL DEFAULT 0;
+ALTER TABLE Uporabnik ADD FlagTekmovanja INT NOT NULL DEFAULT 0;
+ALTER TABLE Uporabnik ADD FlagRezultati INT NOT NULL DEFAULT 0;
+ALTER TABLE Uporabnik ADD FlagGalerijaSlik INT NOT NULL DEFAULT 0;
+
+10. ONas
+
+CREATE TABLE ONas (
+ ID_ONas INT NOT NULL,
+ Vsebina text NULL,
+ Spremenil varchar(30) NULL,
+ SpremenilDatum DateTime NULL,
+ PRIMARY KEY (ID_ONas)
+);
+
+11. KategorijaPovezav
+
+CREATE TABLE KategorijaPovezav (
+ ID_KategorijaPovezav INT NOT NULL,
+ Naslov varchar(30) NOT NULL,
+ Spremenil varchar(30) NULL,
+ SpremenilDatum DateTime NULL,
+ PRIMARY KEY(ID_KategorijaPovezav)
+);
+
+12. Povezave
+
+CREATE TABLE Povezave (
+ ID_Povezava INT NOT NULL,	
+ ID_KategorijaPovezav INT NOT NULL,
+ Naziv varchar(30) NOT NULL,
+ URL varchar(30) NOT NULL, 
+ Spremenil varchar(30) NULL,
+ SpremenilDatum DateTime NULL,
+ PRIMARY KEY(ID_Povezava)
+);
+
+13. Trening:
+
+CREATE TABLE Trening (
+ ID_Trening INT NOT NULL,
+ Naziv varchar(30) NOT NULL,
+ Spremenil varchar(30) NULL,
+ SpremenilDatum DateTime NULL,
+ Pon_Dop_Od varchar(10)	,
+ Pon_Dop_Do varchar(10)	,
+ Pon_Dop_Tre varchar(30),
+ Pon_Pop_Od varchar(10)	,
+ Pon_Pop_Do varchar(10)	,
+ Pon_Pop_Tre varchar(30),
+ Tor_Dop_Od varchar(10)	,
+ Tor_Dop_Do varchar(10)	,
+ Tor_Dop_Tre varchar(30),
+ Tor_Pop_Od varchar(10)	,
+ Tor_Pop_Do varchar(10)	,
+ Tor_Pop_Tre varchar(30),
+ Sre_Dop_Od varchar(10)	,
+ Sre_Dop_Do varchar(10)	,
+ Sre_Dop_Tre varchar(30),
+ Sre_Pop_Od varchar(10)	,
+ Sre_Pop_Do varchar(10)	,
+ Sre_Pop_Tre varchar(30),
+ Cet_Dop_Od varchar(10)	,
+ Cet_Dop_Do varchar(10)	,
+ Cet_Dop_Tre varchar(30),
+ Cet_Pop_Od varchar(10)	,
+ Cet_Pop_Do varchar(10)	,
+ Cet_Pop_Tre varchar(30),
+ Pet_Dop_Od varchar(10)	,
+ Pet_Dop_Do varchar(10)	,
+ Pet_Dop_Tre varchar(30),
+ Pet_Pop_Od varchar(10)	,
+ Pet_Pop_Do varchar(10)	,
+ Pet_Pop_Tre varchar(30),
+ Sob_Dop_Od varchar(10)	,
+ Sob_Dop_Do varchar(10)	,
+ Sob_Dop_Tre varchar(30),
+ Sob_Pop_Od varchar(10)	,
+ Sob_Pop_Do varchar(10)	,
+ Sob_Pop_Tre varchar(30),
+ Ned_Dop_Od varchar(10)	,
+ Ned_Dop_Do varchar(10)	,
+ Ned_Dop_Tre varchar(30),
+ Ned_Pop_Od varchar(10)	,
+ Ned_Pop_Do varchar(10)	,
+ Ned_Pop_Tre varchar(30),
+ PRIMARY KEY(ID_Trening) 
+);
+
+14. Kontakt:
+
+CREATE TABLE Kontakt(
+ ID_Kontakt INT NOT NULL,
+ Spremenil varchar(30) NULL,
+ SpremenilDatum DateTime NULL,
+ Email varchar(30) NULL,
+ Telefon varchar(30) NULL,
+ Fax varchar(30) NULL,
+ GSM varchar(30) NULL,
+ Naslov varchar(30) NULL,
+ PRIMARY KEY(ID_Kontakt)
+);
+
+15. Alter table (Tekmovanja, Rezultati):
+
+ALTER TABLE Tekmovanja ADD FileName varchar(50) NULL;
+ALTER TABLE Rezultati ADD FileName varchar(50) NULL;

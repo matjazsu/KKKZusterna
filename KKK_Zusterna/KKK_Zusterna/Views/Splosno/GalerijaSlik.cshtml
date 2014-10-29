@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Kajak kanu klub Žusterna";
+}
+<div class="span12">
+    @if (KKK_Zusterna.Models.GlobalErrors.seznamNapak != null && KKK_Zusterna.Models.GlobalErrors.seznamNapak.Count > 0)
+    {
+        foreach (string napaka in KKK_Zusterna.Models.GlobalErrors.seznamNapak)
+        {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">
+                        &times;</button>
+                    <strong>Napaka!</strong><br />
+                    @napaka
+                </div>
+            </div>
+        </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril != null && KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril.Count > 0)
+    {
+        foreach (string opozorilo in KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opozorilo!</strong><br /> @opozorilo
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+
+    @if (KKK_Zusterna.Models.GlobalNotifications.seznamObvestil != null && KKK_Zusterna.Models.GlobalNotifications.seznamObvestil.Count > 0)
+    {
+        foreach (string obvestilo in KKK_Zusterna.Models.GlobalNotifications.seznamObvestil)
+        {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">
+                        &times;</button>
+                    <strong>Opravljeno! </strong>@obvestilo
+                </div>
+            </div>
+        </div>
+        }
+    }
+    @if (ViewBag.Data != null && ViewBag.Data.Count > 0)
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <h3>
+                    Galerija slik</h3>
+            </div>
+        </div>
+        
+        for (int i = 0; i < ViewBag.Data.Count; i++)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="span3">
+                        <ul class="thumbnails">
+                            <li class="span12">
+                                <a href="@Url.Action("PrikaziGalerijo", "Splosno", new { ID_galerijaKategorija = ViewBag.Data[i].ID_galerijaKategorija })" class="thumbnail">
+                                    <img src="@ViewBag.Data[i].URLSlika" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="span9">
+                        <div class="span9">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <a href="@Url.Action("PrikaziGalerijo", "Splosno", new { ID_galerijaKategorija = ViewBag.Data[i].ID_galerijaKategorija })"><h4>@ViewBag.Data[i].Naslov</h4></a>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <span class="muted">Objavil: @ViewBag.Data[i].SpremenilUporabnik</span>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <span class="muted">Datum objave: @ViewBag.Data[i].SpremenilDatum</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            </div>   
+        }
+    }
+    else
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">
+                        &times;</button>
+                    <strong>Opozorilo!</strong> Ni dodanih galerij.
+                </div>
+            </div>
+        </div>
+        
+        <div class="row-fluid">
+            <div class="span12">
+                <h3>Galerija slik</h3>
+            </div>
+        </div>
+    }
+</div>

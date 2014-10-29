@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Kajak kanu klub Žusterna";
+}
+
+<div class="span12">
+    
+    @if (KKK_Zusterna.Models.GlobalErrors.seznamNapak != null && KKK_Zusterna.Models.GlobalErrors.seznamNapak.Count > 0)
+    {
+        foreach (string napaka in KKK_Zusterna.Models.GlobalErrors.seznamNapak)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Napaka!</strong><br /> @napaka
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril != null && KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril.Count > 0)
+    {
+        foreach (string opozorilo in KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opozorilo!</strong><br /> @opozorilo
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalNotifications.seznamObvestil != null && KKK_Zusterna.Models.GlobalNotifications.seznamObvestil.Count > 0)
+    {
+        foreach (string obvestilo in KKK_Zusterna.Models.GlobalNotifications.seznamObvestil)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opravljeno! </strong>@obvestilo 
+                    </div>
+                </div>
+            </div>
+        }
+    }  
+    
+    <div class="row-fluid">
+        <div class="span12">
+            <legend>Operacije:</legend>    
+        </div>
+    </div>
+      
+    <div class="row-fluid">
+        <div class="span12">
+            <p>Poizkusite se ponovno prijaviti: <a href="#myModal" data-toggle="modal">tukaj</a></p>
+        </div>
+    </div>
+    
+    <div class="row-fluid">
+        <div class="span12">
+            <p>Poizkusite se registrirati: <a href="@Url.Action("VrniRegistracijaForma", "Administracija")">tukaj</a></p>
+        </div>
+    </div>
+    
+    <div class="row-fluid">
+        <div class="span12"></div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <legend>Pišite administratorju strani:</legend>    
+        </div>
+    </div>
+    
+    @using (Html.BeginForm("PosljiMailAdmin", "Home", FormMethod.Post))
+    {
+        <div class="row-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <label>Vpišite vaše ime:</label>
+                    <input name="Ime" type="text" width="100%" placeholder="Ime ..." class="input-block-level" required/>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <label>Vpišite vaš priimek:</label>
+                    <input name="Priimek" type="text" width="100%" placeholder="Priimek ..." class="input-block-level" required/>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <label>Vpišite vaš e-naslov:</label>
+                    <input name="Email" type="email" width="100%" placeholder="Email ..." class="input-block-level" required/>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <label>Vpišite vsebino:</label>
+                    <textarea name="Vsebina" id="NapakaVsebina" type="text" width="100%" placeholder="Vsebina ..." class="input-block-level" rows="15" required></textarea>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="control-group">
+                        <div class="controls">
+                            <button class="btn btn-primary" type="submit"><i class="icon-envelope icon-white"></i>  Pošlji</button>  
+                            <a class="btn" href="@Url.Action("Index", "Home")"><i class="icon-remove"></i>  Zapri</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }  
+</div>
+
+@using (Html.BeginForm("Prijava", "Administracija", FormMethod.Post))
+{
+    <div class="modal hide fade" id="myModal">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal">×</button>
+            <h3>Prijava</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div class="span8">
+                    <label>E-naslov:</label>
+                    <input class="input-block-level" type="email" name="email" placeholder="email ..." required> 
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span8">
+                    <label>Geslo:</label>
+                    <input class="input-block-level" type="password" name="geslo" placeholder="geslo ..." required> 
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit">Prijavi me</button>
+            <a href="#" class="btn" data-dismiss="modal">Zapri</a>       
+        </div>        
+    </div>
+}

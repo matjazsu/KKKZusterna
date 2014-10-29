@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "Kajak kanu klub Žusterna";
+}
+
+<div class="span12">
+    
+    @if (KKK_Zusterna.Models.GlobalErrors.seznamNapak != null && KKK_Zusterna.Models.GlobalErrors.seznamNapak.Count > 0)
+    {
+        foreach (string napaka in KKK_Zusterna.Models.GlobalErrors.seznamNapak)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Napaka!</strong><br /> @napaka
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril != null && KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril.Count > 0)
+    {
+        foreach (string opozorilo in KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opozorilo!</strong><br /> @opozorilo
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalNotifications.seznamObvestil != null && KKK_Zusterna.Models.GlobalNotifications.seznamObvestil.Count > 0)
+    {
+        foreach (string obvestilo in KKK_Zusterna.Models.GlobalNotifications.seznamObvestil)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opravljeno! </strong>@obvestilo 
+                    </div>
+                </div>
+            </div>
+        }
+    }    
+
+    @if (ViewBag.Data != null)
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Uredi/Izbriši novico: @ViewBag.Data.Naslov</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("UpdateNovica", "Administracija", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label>ID novica:</label>
+                            @Html.TextBox("ID_novica", (int)ViewBag.Data.ID_novica, new { placeholder = "ID novica ...", @readonly = "readonly", @class = "input-block-level" }) 
+                        </div>
+                        <div class="span4">
+                            <label>Spremenil:</label>
+                            @Html.TextBox("Uporabnik", (string)ViewBag.Data.Uporabnik, new { placeholder = "Uporabnik ...", @readonly = "readonly", @class = "input-block-level" }) 
+                        </div>
+                        <div class="span4">
+                            <label>Datum spremembe:</label>
+                            @Html.TextBox("DatumSpremenil", (DateTime)ViewBag.Data.DatumSpremenil, new { placeholder = "Datum zadnje spremembe ...", @readonly = "readonly", @class = "input-block-level" })  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Naslov:</label>
+                            <input class="input-block-level" type="text" name="Naslov" placeholder="Naslov ..." value="@ViewBag.Data.Naslov" required> 
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Povzetek:</label>
+                            <textarea name="Povzetek" id="PovzetekNovica" class="input-block-level" placeholder="Povzetek ..." style="width: 100%" rows="5" required>@ViewBag.Data.Povzetek</textarea>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Vsebina:</label>
+                            <textarea name="Vsebina" id="VsebinaNovica" class="input-block-level" placeholder="Vsebina ..." style="width: 100%" rows="28" required>@ViewBag.Data.Vsebina</textarea>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label>Naslovna slika:</label>
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-preview thumbnail" style="width: 99%; height: 100%;"><img src="@ViewBag.Data.URLSlika" /></div>
+                                <div>
+                                    <span class="btn btn-file"><span class="fileupload-new"><i class="icon-upload"></i>  Izberi sliko</span><span class="fileupload-exists"><i class="icon-edit"></i>  Spremeni</span><input type="file" name="slika" /></span>
+                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><i class="icon-remove"></i>  Odstrani</a>
+                                </div>
+                            </div>   
+                        </div>
+                        <div class="span8"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-edit icon-white"></i>  Uredi</button>  
+                                    <a class="btn btn-danger" href="@Url.Action("DeleteNovica", "Administracija", new { ID_novica = ViewBag.Data.ID_novica })"><i class="icon-trash icon-white"></i>  Izbriši novico</a>
+                                    @if (ViewBag.Data.URLSlika != "")
+                                    {
+                                        <a class="btn btn-danger" href="@Url.Action("DeleteNovicaImage", "Administracija", new {ID_novica = ViewBag.Data.ID_novica})"><i class="icon-trash icon-white"></i>  Izbriši sliko</a>
+                                    }
+                                    <a class="btn" href="@Url.Action("UrediNovice", "Administracija")"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Dodaj novico</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("InsertNovica", "Administracija", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Naslov:</label>
+                            <input class="input-block-level" type="text" name="Naslov" placeholder="Naslov ..." required>  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Povzetek:</label>
+                            <textarea name="Povzetek" id="PovzetekNovicaNova" class="input-block-level" placeholder="Povzetek ..." style="width: 100%" rows="5" required></textarea>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Vsebina:</label>
+                            <textarea name="Vsebina" id="VsebinaNovicaNova" class="input-block-level" placeholder="Vsebina ..." style="width: 100%" rows="28" required></textarea>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label>Naslovna slika:</label>
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-preview thumbnail" style="width: 99%; height: 100%;"></div>
+                                <div>
+                                    <span class="btn btn-file"><span class="fileupload-new"><i class="icon-upload"></i>  Izberi sliko</span><span class="fileupload-exists"><i class="icon-edit"></i>  Spremeni</span><input type="file" name="slika" /></span>
+                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><i class="icon-remove"></i>  Odstrani</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span8"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-plus icon-white"></i>  Shrani</button>
+                                    <a class="btn" href="@Url.Action("UrediNovice", "Administracija")"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+      
+</div>

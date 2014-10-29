@@ -1,0 +1,912 @@
+﻿@{
+    ViewBag.Title = "Kajak kanu klub Žusterna";
+}
+
+<div class="span12">
+    
+    @if (KKK_Zusterna.Models.GlobalErrors.seznamNapak != null && KKK_Zusterna.Models.GlobalErrors.seznamNapak.Count > 0)
+    {
+        foreach (string napaka in KKK_Zusterna.Models.GlobalErrors.seznamNapak)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Napaka!</strong><br /> @napaka
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril != null && KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril.Count > 0)
+    {
+        foreach (string opozorilo in KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opozorilo!</strong><br /> @opozorilo
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalNotifications.seznamObvestil != null && KKK_Zusterna.Models.GlobalNotifications.seznamObvestil.Count > 0)
+    {
+        foreach (string obvestilo in KKK_Zusterna.Models.GlobalNotifications.seznamObvestil)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opravljeno! </strong>@obvestilo 
+                    </div>
+                </div>
+            </div>
+        }
+    }    
+
+    @if (ViewBag.Data != null)
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Uredi/Izbriši trening: @ViewBag.Data.Naziv</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("UpdateTrening", "Administracija", FormMethod.Post))
+                {
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label>ID trening:</label>
+                            @Html.TextBox("ID_Trening", (int)ViewBag.Data.ID_Trening, new { placeholder = "ID trenign ...", @readonly = "readonly", @class = "input-block-level" }) 
+                        </div>
+                        <div class="span4">
+                            <label>Spremenil:</label>
+                            @Html.TextBox("Spremenil", (string)ViewBag.Data.Spremenil, new { placeholder = "Spremenil ...", @readonly = "readonly", @class = "input-block-level" }) 
+                        </div>
+                        <div class="span4">
+                            <label>Datum spremembe:</label>
+                            @Html.TextBox("SpremenilDatum", (DateTime)ViewBag.Data.SpremenilDatum, new { placeholder = "Datum spremembe ...", @readonly = "readonly", @class = "input-block-level" }) 
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Vpišite naziv:</label>
+                            <input class="input-block-level" type="text" name="Naziv" placeholder="Naziv ..." required value="@ViewBag.Data.Naziv">
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Ponedeljek</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pon_Dop_Od" class="input-small" value="@ViewBag.Data.Pon_Dop_Od" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pon_Dop_Do" class="input-small" value="@ViewBag.Data.Pon_Dop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Pon_Dop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Pon_Dop_Tre">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pon_Pop_Od" class="input-small" value="@ViewBag.Data.Pon_Pop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pon_Pop_Do" class="input-small" value="@ViewBag.Data.Pon_Pop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Pon_Pop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Pon_Pop_Tre">
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Torek</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Tor_Dop_Od" class="input-small" value="@ViewBag.Data.Tor_Dop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Tor_Dop_Do" class="input-small" value="@ViewBag.Data.Tor_Dop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Tor_Dop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Tor_Dop_Tre">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Tor_Pop_Od" class="input-small" value="@ViewBag.Data.Tor_Pop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Tor_Pop_Do" class="input-small" value="@ViewBag.Data.Tor_Pop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Tor_Pop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Tor_Pop_Tre">
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Sreda</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sre_Dop_Od" class="input-small" value="@ViewBag.Data.Sre_Dop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" type="text" name="Sre_Dop_Do" class="input-small" value="@ViewBag.Data.Sre_Dop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Sre_Dop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Sre_Dop_Tre">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sre_Pop_Od" class="input-small" value="@ViewBag.Data.Sre_Pop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sre_Pop_Do" class="input-small" value="@ViewBag.Data.Sre_Pop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Sre_Pop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Sre_Pop_Tre">
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Četrtek</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Cet_Dop_Od" class="input-small" value="@ViewBag.Data.Cet_Dop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Cet_Dop_Do" class="input-small" value="@ViewBag.Data.Cet_Dop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Cet_Dop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Cet_Dop_Tre">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Cet_Pop_Od" class="input-small" value="@ViewBag.Data.Cet_Pop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Cet_Pop_Do" class="input-small" value="@ViewBag.Data.Cet_Pop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Cet_Pop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Cet_Pop_Tre">
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Petek</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pet_Dop_Od" class="input-small" value="@ViewBag.Data.Pet_Dop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pet_Dop_Do" class="input-small" value="@ViewBag.Data.Pet_Dop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Pet_Dop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Pet_Dop_Tre">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pet_Pop_Od" class="input-small" value="@ViewBag.Data.Pet_Pop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pet_Pop_Do" class="input-small" value="@ViewBag.Data.Pet_Pop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Pet_Pop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Pet_Pop_Tre">
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Sobota</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sob_Dop_Od" class="input-small" value="@ViewBag.Data.Sob_Dop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sob_Dop_Do" class="input-small" value="@ViewBag.Data.Sob_Dop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Sob_Dop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Sob_Dop_Tre">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sob_Pop_Od" class="input-small" value="@ViewBag.Data.Sob_Pop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sob_Pop_Do" class="input-small" value="@ViewBag.Data.Sob_Pop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Sob_Pop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Sob_Pop_Tre">
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Nedelja</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Ned_Dop_Od" class="input-small" value="@ViewBag.Data.Ned_Dop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Ned_Dop_Do" class="input-small" value="@ViewBag.Data.Ned_Dop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Ned_Dop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Ned_Dop_Tre">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Ned_Pop_Od" class="input-small" value="@ViewBag.Data.Ned_Pop_Od">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Ned_Pop_Do" class="input-small" value="@ViewBag.Data.Ned_Pop_Do">
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Ned_Pop_Tre" placeholder="Trening ..." value="@ViewBag.Data.Ned_Pop_Tre">
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-edit icon-white"></i>  Uredi</button>
+                                    <a class="btn btn-danger" href="@Url.Action("DeleteTrening", "Administracija", new { ID_Trening = ViewBag.Data.ID_Trening })"><i class="icon-trash icon-white"></i>  Izbriši trening</a>
+                                    <a class="btn" href="@Url.Action("UrediKategorijoTreningov", "Administracija")"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>   
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Dodaj trening</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("InsertTrening", "Administracija", FormMethod.Post))
+                {
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Vpišite naziv:</label>
+                            <input class="input-block-level" type="text" name="Naziv" placeholder="Naziv ..." required>
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Ponedeljek</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pon_Dop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pon_Dop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Pon_Dop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pon_Pop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pon_Pop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Pon_Pop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Torek</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Tor_Dop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Tor_Dop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Tor_Dop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Tor_Pop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Tor_Pop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Tor_Pop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Sreda</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sre_Dop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" type="text" name="Sre_Dop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Sre_Dop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sre_Pop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sre_Pop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Sre_Pop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Četrtek</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Cet_Dop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Cet_Dop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Cet_Dop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Cet_Pop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Cet_Pop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Cet_Pop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Petek</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pet_Dop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pet_Dop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Pet_Dop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pet_Pop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Pet_Pop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Pet_Pop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Sobota</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sob_Dop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sob_Dop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Sob_Dop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sob_Pop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Sob_Pop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Sob_Pop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Nedelja</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Dop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Ned_Dop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Dop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Ned_Dop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Dop. trening:</label>
+                            <input class="input-block-level" type="text" name="Ned_Dop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <label>Pop. ura od:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Ned_Pop_Od" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <label>Pop. ura do:</label>
+                            <div class="input-append bootstrap-timepicker">
+                                <input data-format="hh:mm" type="time" name="Ned_Pop_Do" class="input-small" />
+                                <span class="add-on">
+                                    <i class="icon-time"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <label>Pop. trening:</label>
+                            <input class="input-block-level" type="text" name="Ned_Pop_Tre" placeholder="Trening ..." />
+                        </div>
+                    </div>
+                    
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-plus icon-white"></i>  Shrani</button>
+                                    <a class="btn" href="@Url.Action("UrediKategorijoTreningov", "Administracija")"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+      
+</div>

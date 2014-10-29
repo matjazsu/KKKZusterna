@@ -1,0 +1,235 @@
+﻿@{
+    ViewBag.Title = "Kajak kanu klub Žusterna";
+}
+
+<div class="span12">
+    
+    @if (KKK_Zusterna.Models.GlobalErrors.seznamNapak != null && KKK_Zusterna.Models.GlobalErrors.seznamNapak.Count > 0)
+    {
+        foreach (string napaka in KKK_Zusterna.Models.GlobalErrors.seznamNapak)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Napaka!</strong><br /> @napaka
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril != null && KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril.Count > 0)
+    {
+        foreach (string opozorilo in KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opozorilo!</strong><br /> @opozorilo
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalNotifications.seznamObvestil != null && KKK_Zusterna.Models.GlobalNotifications.seznamObvestil.Count > 0)
+    {
+        foreach (string obvestilo in KKK_Zusterna.Models.GlobalNotifications.seznamObvestil)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opravljeno! </strong>@obvestilo 
+                    </div>
+                </div>
+            </div>
+        }
+    }    
+
+    @if (ViewBag.Data != null)
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Uredi/Izbriši tekmovanje: @ViewBag.Data.Naslov</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("UpdateTekmovanje", "Administracija", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label>ID rezultat:</label>
+                            @Html.TextBox("ID_tekmovanja", (int)ViewBag.Data.ID_tekmovanja, new { placeholder = "ID tekmovanje ...", @readonly = "readonly", @class = "input-block-level" }) 
+                        </div>
+                        <div class="span4">
+                            <label>Spremenil:</label>
+                            @Html.TextBox("Spremenil", (string)ViewBag.Data.Spremenil, new { placeholder = "Uporabnik ...", @readonly = "readonly", @class = "input-block-level" }) 
+                        </div>
+                        <div class="span4">
+                            <label>Datum spremembe:</label>
+                            @Html.TextBox("SpremenilDatum", (DateTime)ViewBag.Data.SpremenilDatum, new { placeholder = "Datum zadnje spremembe ...", @readonly = "readonly", @class = "input-block-level" })  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Naslov:</label>
+                            <input class="input-block-level" type="text" name="NaslovTekmovanja" placeholder="Naslov ..." value="@ViewBag.Data.Naslov" required>  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Vsebina:</label>
+                            <textarea name="VsebinaTekmovanja" id="VsebinaTekmovanja" class="input-block-level" placeholder="Vsebina ..." rows="10" required>@ViewBag.Data.Vsebina</textarea>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <label>Datoteka (.pdf, .xslx, ...):</label>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <ul>
+                                        <li>Trenutno naložena datoteka: <a href="@ViewBag.Data.URLFile">@ViewBag.Data.URLFile</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <ul>
+                                        <li>Spremeni: </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class=" span12">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="input-append">
+                                            <div class="uneditable-input span3">
+                                                <i class="icon-file fileupload-exists"></i> 
+                                                <span class="fileupload-preview"></span>
+                                            </div>
+                                            <span class="btn btn-file">
+                                                <span class="fileupload-new"><i class="icon-edit"></i>  Spremeni</span>
+                                                <span class="fileupload-exists"><i class="icon-edit"></i>  Spremeni</span>
+                                                <input type="file" name="datoteka"/>
+                                            </span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><i class="icon-remove"></i>  Odstrani</a>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Prikazno ime datoteke (v kolikor pustite prazno bo sistem ime pridobil iz naložene datoteke):</label>
+                            <input class="input-block-level" type="text" name="FileNameTekmovanje" placeholder="Ime datoteke ..." value="@ViewBag.Data.FileName">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-edit icon-white"></i>  Uredi</button>  
+                                    <a class="btn btn-danger" href="@Url.Action("DeleteTekmovanje", "Administracija", new { ID_tekmovanja = ViewBag.Data.ID_tekmovanja })"><i class="icon-trash icon-white"></i>  Izbriši tekmovanje</a>
+                                    <a class="btn" href="@Url.Action("LetoTekmovanjaPodrobnosti", "Administracija", new { ID_letoTekmovanja = @ViewBag.Data.ID_letoTekmovanja })"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Dodaj rezultat</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("InsertTekmovanje", "Administracija", new { ID_LetoTekmovanja = ViewBag.ID_LetoTekmovanja }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Naslov:</label>
+                            <input class="input-block-level" type="text" name="Naslov" placeholder="Naslov ..." required>  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Vsebina:</label>
+                            <textarea name="Vsebina" id="VsebinaTekmovanjaNova" class="input-block-level" placeholder="Vsebina ..." rows="10" required></textarea>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label>Datoteka (.pdf, .xslx, ...):</label>
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="input-append">
+                                    <div class="uneditable-input span3">
+                                        <i class="icon-file fileupload-exists"></i> 
+                                        <span class="fileupload-preview"></span>
+                                    </div>
+                                    <span class="btn btn-file">
+                                        <span class="fileupload-new"><i class="icon-upload"></i>  Izberi</span>
+                                        <span class="fileupload-exists"><i class="icon-edit"></i>  Spremeni</span>
+                                        <input type="file" name="datoteka"/>
+                                    </span>
+                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><i class="icon-remove"></i>  Odstrani</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span8"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Prikazno ime datoteke (v kolikor pustite prazno bo sistem ime pridobil iz naložene datoteke):</label>
+                            <input class="input-block-level" type="text" name="FileNameTekmovanje" placeholder="Ime datoteke ...">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-plus icon-white"></i>  Shrani</button>
+                                    <a class="btn" href="@Url.Action("LetoTekmovanjaPodrobnosti", "Administracija", new { ID_letoTekmovanja = @ViewBag.ID_LetoTekmovanja })"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+      
+</div>

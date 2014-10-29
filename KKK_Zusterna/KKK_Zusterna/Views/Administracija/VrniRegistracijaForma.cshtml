@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "Kajak kanu klub Žusterna";
+}
+<div class="span12">
+    @if (KKK_Zusterna.Models.GlobalErrors.seznamNapak != null && KKK_Zusterna.Models.GlobalErrors.seznamNapak.Count > 0)
+    {
+        foreach (string napaka in KKK_Zusterna.Models.GlobalErrors.seznamNapak)
+        {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">
+                        &times;</button>
+                    <strong>Napaka!</strong><br />
+                    @napaka
+                </div>
+            </div>
+        </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril != null && KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril.Count > 0)
+    {
+        foreach (string opozorilo in KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opozorilo!</strong><br /> @opozorilo
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+
+    @if (KKK_Zusterna.Models.GlobalNotifications.seznamObvestil != null && KKK_Zusterna.Models.GlobalNotifications.seznamObvestil.Count > 0)
+    {
+        foreach (string obvestilo in KKK_Zusterna.Models.GlobalNotifications.seznamObvestil)
+        {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">
+                        &times;</button>
+                    <strong>Opravljeno! </strong>@obvestilo
+                </div>
+            </div>
+        </div>
+        }
+    }
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span12">
+                    <h3>
+                        Registracija uporabnika</h3>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <legend>Podatki</legend>
+                </div>
+            </div>
+            @using (Html.BeginForm("RegistrirajUporabnika", "Administracija", FormMethod.Post))
+            {
+                <div class="row-fluid">
+                    <div class="span12">
+                        <label>
+                            E-mail:</label>
+                        <input class="input-block-level" type="email" name="Email" placeholder="Email ..."
+                            required>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <label>
+                            Ime:</label>
+                        <input class="input-block-level" type="text" name="Ime" placeholder="Ime ..." required>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <label>
+                            Priimek:</label>
+                        <input class="input-block-level" type="text" name="Priimek" placeholder="Priimek ..."
+                            required>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <label>
+                            Geslo:</label>
+                        <input class="input-block-level" type="password" name="Geslo" placeholder="Geslo ..."
+                            required>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <label>
+                            Ponovi geslo:</label>
+                        <input class="input-block-level" type="password" name="PonoviGeslo" placeholder="Ponovi geslo ..."
+                            required>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Operacije</legend>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="control-group">
+                            <div class="controls">
+                                <button class="btn btn-primary" type="submit"><i class="icon-envelope icon-white"></i>  Pošlji</button>
+                                <a class="btn" href="@Url.Action("Index", "Home")"><i class="icon-remove"></i>  Zapri</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

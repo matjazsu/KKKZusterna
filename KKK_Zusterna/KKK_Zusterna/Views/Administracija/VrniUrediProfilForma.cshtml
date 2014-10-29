@@ -1,0 +1,216 @@
+﻿@{
+    ViewBag.Title = "Kajak kanu klub Žusterna";
+}
+
+<div class="span12">
+    
+    @if (KKK_Zusterna.Models.GlobalErrors.seznamNapak != null && KKK_Zusterna.Models.GlobalErrors.seznamNapak.Count > 0)
+    {
+        foreach (string napaka in KKK_Zusterna.Models.GlobalErrors.seznamNapak)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Napaka!</strong><br /> @napaka
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril != null && KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril.Count > 0)
+    {
+        foreach (string opozorilo in KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opozorilo!</strong><br /> @opozorilo
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalNotifications.seznamObvestil != null && KKK_Zusterna.Models.GlobalNotifications.seznamObvestil.Count > 0)
+    {
+        foreach (string obvestilo in KKK_Zusterna.Models.GlobalNotifications.seznamObvestil)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opravljeno! </strong>@obvestilo 
+                    </div>
+                </div>
+            </div>
+        }
+    }    
+
+    @if (ViewBag.Data != null)
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Uredi profil: @ViewBag.Data.Ime @ViewBag.Data.Priimek</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("UpdateProfilUporabnik", "Administracija", FormMethod.Post))
+                {
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label>ID uporabnik:</label>
+                            @Html.TextBox("ID_uporabnik", (int) ViewBag.Data.ID_uporabnik, new {placeholder = "ID uporabnik ...", @readonly = "readonly", @class = "input-block-level"}) 
+                        </div>
+                        <div class="span4">
+                            <label>Spremenil:</label>
+                            @Html.TextBox("Spremenil", (string) ViewBag.Data.Spremenil, new {placeholder = "Spremenil ...", @readonly = "readonly", @class = "input-block-level"}) 
+                        </div>
+                        <div class="span4">
+                            <label>Datum spremembe:</label>
+                            @Html.TextBox("SpremenilDatum", (DateTime) ViewBag.Data.SpremenilDatum, new {placeholder = "Datum spremembe ...", @readonly = "readonly", @class = "input-block-level"}) 
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>E-mail:</label>
+                            <input class="input-block-level" type="email" name="Email" placeholder="Email ..." value="@ViewBag.Data.Email" required readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Ime:</label>
+                            <input class="input-block-level" type="text" name="Ime" placeholder="Ime ..." value="@ViewBag.Data.Ime" required>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Priimek:</label>
+                            <input class="input-block-level" type="text" name="Priimek" placeholder="Priimek ..." value="@ViewBag.Data.Priimek" required>
+                        </div>
+                    </div>
+                    if (System.Web.HttpContext.Current.User.IsInRole("Admin"))
+                    {
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <legend>Obveščanje</legend>    
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail ob <b>uspešni prijavi uporabnika</b>. @Html.CheckBox("FlagPrijava", ViewBag.Data.FlagPrijava == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail ob <b>napaki sistema</b>. @Html.CheckBox("FlagNapaka", ViewBag.Data.FlagNapaka == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail iz forme <b>"Kontakt"</b>. @Html.CheckBox("FlagKontakt", ViewBag.Data.FlagKontakt == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail iz forme <b>"Registracija uporabnika"</b>. @Html.CheckBox("FlagRegistracija", ViewBag.Data.FlagRegistracija == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail iz forme <b>"Napaka pri avtorizaciji"</b>. @Html.CheckBox("FlagNapakaAvtorizacija", ViewBag.Data.FlagNapakaAvtorizacija == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail ob uspešni spremembi segmenta <b>"O nas"</b>. @Html.CheckBox("FlagONas", ViewBag.Data.FlagONas == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail ob uspešni spremembi segmenta <b>"Povezave"</b>. @Html.CheckBox("FlagPovezave", ViewBag.Data.FlagPovezave == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail ob uspešni spremembi segmenta <b>"Treningi"</b>. @Html.CheckBox("FlagTreningi", ViewBag.Data.FlagTreningi == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail ob uspešni spremembi segmenta <b>"Tekmovanja"</b>. @Html.CheckBox("FlagTekmovanja", ViewBag.Data.FlagTekmovanja == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail ob uspešni spremembi segmenta <b>"Rezultati"</b>. @Html.CheckBox("FlagRezultati", ViewBag.Data.FlagRezultati == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <label class="checkbox">
+                                    Prejmi e-mail ob uspešni spremenbi segmenta <b>"Galeriji slik"</b>. @Html.CheckBox("FlagGalerijaSlik", ViewBag.Data.FlagGalerijaSlik == 1 ? true : false)
+                                </label>                      
+                            </div>
+                        </div>
+                    }
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-edit icon-white"></i>  Uredi</button>  
+                                    <a class="btn" href="@Url.Action("Index", "Home")"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Napaka!</strong><br /> Prišlo je do neznane napake. Prosimo kontaktirajte administratorja strani.
+                </div> 
+            </div>
+        </div>
+    }
+      
+</div>

@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "Kajak kanu klub Žusterna";
+}
+
+<div class="span12">
+    
+    @if (KKK_Zusterna.Models.GlobalErrors.seznamNapak != null && KKK_Zusterna.Models.GlobalErrors.seznamNapak.Count > 0)
+    {
+        foreach (string napaka in KKK_Zusterna.Models.GlobalErrors.seznamNapak)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Napaka!</strong><br /> @napaka
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril != null && KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril.Count > 0)
+    {
+        foreach (string opozorilo in KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opozorilo!</strong><br /> @opozorilo
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalNotifications.seznamObvestil != null && KKK_Zusterna.Models.GlobalNotifications.seznamObvestil.Count > 0)
+    {
+        foreach (string obvestilo in KKK_Zusterna.Models.GlobalNotifications.seznamObvestil)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opravljeno! </strong>@obvestilo 
+                    </div>
+                </div>
+            </div>
+        }
+    }    
+
+    @if (ViewBag.Data != null)
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Uredi/Izbriši kategorijo povezav: @ViewBag.Data.Naslov</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <label>ID:</label>
+                        @Html.TextBox("ID_KategorijaPovezav", (int)ViewBag.Data.ID_KategorijaPovezav, new { placeholder = "ID ...", @readonly = "readonly", @class = "input-block-level" }) 
+                    </div>
+                    <div class="span4">
+                        <label>Spremenil:</label>
+                        @Html.TextBox("Spremenil", (string)ViewBag.Data.Spremenil, new { placeholder = "Uporabnik ...", @readonly = "readonly", @class = "input-block-level" }) 
+                    </div>
+                    <div class="span4">
+                        <label>Datum spremembe:</label>
+                        @Html.TextBox("SpremenilDatum", (DateTime)ViewBag.Data.SpremenilDatum, new { placeholder = "Datum zadnje spremembe ...", @readonly = "readonly", @class = "input-block-level" })  
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Povezave</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("FindPovezave", "Administracija", new { ID_KategorijaPovezav = ViewBag.Data.ID_KategorijaPovezav }, FormMethod.Post))
+                {
+                    <div class="row-fluid">
+                        <div class="span3">
+                            <label>Vpišite ID:</label>
+                            <input name="ID_Povezave" type="text" width="100%" placeholder="ID ..." class="input-block-level"/>
+                        </div>
+                        <div class="span3">
+                            <label>Vpišite naziv:</label>
+                            <input name="Naziv" type="text" width="100%" placeholder="Naslov ..." class="input-block-level"/>
+                        </div>
+                        <div class="span3">
+                            <div class="span12">
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <button class="btn btn-primary" style="margin-top: 24px" type="submit"><i class="icon-search icon-white"></i>  Najdi</button> 
+                                        <a class="btn btn-primary" style="margin-top: 24px" href="@Url.Action("PovezavePodrobnosti", "Administracija", new { ID_Povezave = 0, ID_KategorijaPovezav = @ViewBag.Data.ID_KategorijaPovezav })"><i class="icon-plus icon-white"></i>  Dodaj</a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <td><strong>#</strong></td>
+                                    <td><strong>Naziv</strong></td>
+                                    <td><strong>URL</strong></td>
+                                    <td><strong>Spremenil</strong></td>
+                                    <td><strong>Datum spremembe</strong></td>
+                                </tr>
+                            </thead>
+                            <tbody data-link="row" class="rowlink">
+                                @if (ViewBag.SeznamPovezav != null && ViewBag.SeznamPovezav.Count > 0)
+                                {
+                                    for (int i = 0; i < ViewBag.SeznamPovezav.Count; i++)
+                                    {
+                                        if (i % 2 == 0)
+                                        {
+                                            <tr class="success">
+                                                <td><a href="@Url.Action("PovezavePodrobnosti", "Administracija", new { ID_Povezave = ViewBag.SeznamPovezav[i].ID_Povezava, ID_KategorijaPovezav = ViewBag.SeznamPovezav[i].ID_KategorijaPovezav })">@ViewBag.SeznamPovezav[i].ID_Povezava</a></td>
+                                                <td>@ViewBag.SeznamPovezav[i].Naziv</td>
+                                                <td>@ViewBag.SeznamPovezav[i].URL</td>
+                                                <td>@ViewBag.SeznamPovezav[i].Spremenil</td>
+                                                <td>@ViewBag.SeznamPovezav[i].SpremenilDatum</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr class="info">
+                                                <td><a href="@Url.Action("PovezavePodrobnosti", "Administracija", new { ID_Povezave = ViewBag.SeznamPovezav[i].ID_Povezava, ID_KategorijaPovezav = ViewBag.SeznamPovezav[i].ID_KategorijaPovezav })">@ViewBag.SeznamPovezav[i].ID_Povezava</a></td>
+                                                <td>@ViewBag.SeznamPovezav[i].Naziv</td>
+                                                <td>@ViewBag.SeznamPovezav[i].URL</td>
+                                                <td>@ViewBag.SeznamPovezav[i].Spremenil</td>
+                                                <td>@ViewBag.SeznamPovezav[i].SpremenilDatum</td>
+                                            </tr>   
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>        
+                    </div>     
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Operacije</legend>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="control-group">
+                            <div class="controls">
+                                <a class="btn btn-danger" href="@Url.Action("DeleteKategorijaPovezav", "Administracija", new { ID_KategorijaPovezav = ViewBag.Data.ID_KategorijaPovezav })"><i class="icon-trash icon-white"></i>  Izbriši</a>
+                                <a class="btn" href="@Url.Action("UrediKategorijoPovezav", "Administracija")"><i class="icon-remove"></i>  Zapri</a>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Dodaj kategorijo povezav</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("InsertKategorijoPovezav", "Administracija", FormMethod.Post))
+                {
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Vpišite naslov:</label>
+                            <input class="input-block-level" type="text" name="Naslov" placeholder="Naslov ..." required>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-plus icon-white"></i>  Shrani</button>
+                                    <a class="btn" href="@Url.Action("UrediKategorijoPovezav", "Administracija")"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+      
+</div>

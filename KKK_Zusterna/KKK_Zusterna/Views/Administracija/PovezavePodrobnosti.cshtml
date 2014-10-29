@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Kajak kanu klub Žusterna";
+}
+
+<div class="span12">
+    
+    @if (KKK_Zusterna.Models.GlobalErrors.seznamNapak != null && KKK_Zusterna.Models.GlobalErrors.seznamNapak.Count > 0)
+    {
+        foreach (string napaka in KKK_Zusterna.Models.GlobalErrors.seznamNapak)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Napaka!</strong><br /> @napaka
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril != null && KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril.Count > 0)
+    {
+        foreach (string opozorilo in KKK_Zusterna.Models.GlobalWarnings.seznamOpozoril)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opozorilo!</strong><br /> @opozorilo
+                    </div> 
+                </div>
+            </div> 
+        }
+    }
+    
+    @if (KKK_Zusterna.Models.GlobalNotifications.seznamObvestil != null && KKK_Zusterna.Models.GlobalNotifications.seznamObvestil.Count > 0)
+    {
+        foreach (string obvestilo in KKK_Zusterna.Models.GlobalNotifications.seznamObvestil)
+        {
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Opravljeno! </strong>@obvestilo 
+                    </div>
+                </div>
+            </div>
+        }
+    }    
+
+    @if (ViewBag.Data != null)
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Uredi/Izbriši povezavo: @ViewBag.Data.Naziv</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("UpdatePovezava", "Administracija", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label>ID povezave:</label>
+                            @Html.TextBox("ID_Povezava", (int)ViewBag.Data.ID_Povezava, new { placeholder = "ID povezave ...", @readonly = "readonly", @class = "input-block-level" }) 
+                        </div>
+                        <div class="span4">
+                            <label>Spremenil:</label>
+                            @Html.TextBox("Spremenil", (string)ViewBag.Data.Spremenil, new { placeholder = "Uporabnik ...", @readonly = "readonly", @class = "input-block-level" }) 
+                        </div>
+                        <div class="span4">
+                            <label>Datum spremembe:</label>
+                            @Html.TextBox("SpremenilDatum", (DateTime)ViewBag.Data.SpremenilDatum, new { placeholder = "Datum zadnje spremembe ...", @readonly = "readonly", @class = "input-block-level" })  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Naziv:</label>
+                            <input class="input-block-level" type="text" name="Naziv" placeholder="Naziv ..." value="@ViewBag.Data.Naziv" required>  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>URL:</label>
+                            <input class="input-block-level" type="text" name="URL" placeholder="URL ..." value="@ViewBag.Data.URL" required>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Preizkusi URL:</label>
+                            <a target="_blank" href="@ViewBag.Data.URL">@ViewBag.Data.URL</a>  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-edit icon-white"></i>  Uredi</button>  
+                                    <a class="btn btn-danger" href="@Url.Action("DeletePovezava", "Administracija", new { ID_Povezava = ViewBag.Data.ID_Povezava })"><i class="icon-trash icon-white"></i>  Izbriši povezavo</a>
+                                    <a class="btn" href="@Url.Action("KategorijaPovezavPodrobnosti", "Administracija", new { ID_KategorijaPovezav = @ViewBag.Data.ID_KategorijaPovezav })"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h3>Dodaj povezavo</h3>    
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <legend>Podatki</legend>    
+                    </div>
+                </div>
+                @using (Html.BeginForm("InsertPovezava", "Administracija", new { ID_KategorijaPovezav = ViewBag.ID_KategorijaPovezav }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>Naziv:</label>
+                            <input class="input-block-level" type="text" name="Naziv" placeholder="Naziv ..." required>  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <label>URL:</label>
+                            <input class="input-block-level" type="text" name="URL" placeholder="URL ..." required>  
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <legend>Operacije</legend>    
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-primary" type="submit"><i class="icon-plus icon-white"></i>  Shrani</button>
+                                    <a class="btn" href="@Url.Action("KategorijaPovezavPodrobnosti", "Administracija", new { ID_KategorijaPovezav = @ViewBag.ID_KategorijaPovezav })"><i class="icon-remove"></i>  Zapri</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+      
+</div>
