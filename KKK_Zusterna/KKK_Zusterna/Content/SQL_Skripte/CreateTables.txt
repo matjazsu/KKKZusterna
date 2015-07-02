@@ -209,3 +209,13 @@ CREATE TABLE Kontakt(
 
 ALTER TABLE Tekmovanja ADD FileName varchar(50) NULL;
 ALTER TABLE Rezultati ADD FileName varchar(50) NULL;
+
+16. NovicaPriloge
+
+CREATE TABLE NovicaPriloga (
+ ID_novicaPriloga INT NOT NULL,
+ ID_novica INT NOT NULL,
+ URLFile varchar(50) NULL,
+ Naslov varchar(50) NULL,
+ PRIMARY KEY(ID_novicaPriloga)
+); 
