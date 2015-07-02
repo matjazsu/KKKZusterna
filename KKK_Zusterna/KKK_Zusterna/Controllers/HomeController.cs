@@ -20,6 +20,8 @@ namespace KKK_Zusterna.Controllers
 
         public NovicaPPP UpraviteljNovica = new NovicaPPP();
 
+        public NovicaPrilogaPPP UpraviteljNovicaPriloga = new NovicaPrilogaPPP();
+
         #endregion
 
         #region Index
@@ -73,9 +75,10 @@ namespace KKK_Zusterna.Controllers
 
                 //Get Novica
                 Novica novica = UpraviteljNovica.VrniNovico(ID_novica);
-
-                //Return Novica to View
                 ViewBag.Data = novica;
+
+                List<NovicaPriloga> priloge = UpraviteljNovicaPriloga.VrniPrilogeZaNovico(ID_novica);
+                ViewBag.Priloge = priloge;
 
                 //Obvestilo o uspehu akcije if TrenutniUporabnik != null
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)

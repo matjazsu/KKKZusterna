@@ -12,5 +12,6 @@ namespace KKK_Zusterna.Enums
         public static readonly string SaveRezultati = System.Configuration.ConfigurationManager.AppSettings["SaveRezultati"];
         public static readonly string SaveTekmovanja = System.Configuration.ConfigurationManager.AppSettings["SaveTekmovanja"];
         public static readonly string SaveONas = System.Configuration.ConfigurationManager.AppSettings["SaveONas"];
+        public static readonly string SaveNovicaPriloga = System.Configuration.ConfigurationManager.AppSettings["SaveNovicaPriloge"];
     }
 }

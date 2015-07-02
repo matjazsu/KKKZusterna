@@ -26,6 +26,7 @@ namespace KKK_Zusterna.Controllers
         public UporabnikPPP UpraviteljUporabnik = new UporabnikPPP();
 
         public NovicaPPP UpraviteljNovica = new NovicaPPP();
+        public NovicaPrilogaPPP UpraviteljNovicaPriloga = new NovicaPrilogaPPP();
 
         public ONasPPP UpraviteljONas = new ONasPPP();
 
@@ -1068,6 +1069,9 @@ namespace KKK_Zusterna.Controllers
                     Novica novica = UpraviteljNovica.VrniNovico(ID_novica);
                     ViewBag.Data = novica;
 
+                    List<NovicaPriloga> priloge = UpraviteljNovicaPriloga.VrniPrilogeZaNovico(ID_novica);
+                    ViewBag.Priloge = priloge;
+
                     //Obvestilo o uspehu akcije
                     GlobalNotifications.DodajObvestilo(GlobalNotifications.UspehOperacije);
                 }
@@ -1096,7 +1100,7 @@ namespace KKK_Zusterna.Controllers
 
         [HttpPost, ValidateInput(false)]
         [Authorize]
-        public ActionResult UpdateNovica(int ID_novica, string Naslov, string Povzetek, string Vsebina, string Uporabnik, HttpPostedFileBase slika)
+        public ActionResult UpdateNovica(int ID_novica, string Naslov, string Povzetek, string Vsebina, string Uporabnik, HttpPostedFileBase slika, HttpPostedFileBase[] priloge)
         {
             try
             {
@@ -1156,8 +1160,54 @@ namespace KKK_Zusterna.Controllers
 
                 #endregion
 
+                #region NovicaPriloge
+
+                if(priloge != null && priloge.Count() > 0)
+                {
+                    foreach (HttpPostedFileBase priloga in priloge)
+                    {
+                        if(priloga != null && !System.IO.File.Exists(Server.MapPath(KKKZusternaEnum.SaveNovicaPriloga + priloga.FileName)))
+                        {
+                            #region Save file
+
+                            string pathForFile = "";
+
+                            // code for saving the image file to a physical location.
+                            var fileName = Path.GetFileName(priloga.FileName);
+                            var path = Path.Combine(Server.MapPath(KKKZusternaEnum.SaveNovicaPriloga), fileName);
+                            priloga.SaveAs(path);
+
+                            pathForFile = Url.Content(Path.Combine(KKKZusternaEnum.SaveNovicaPriloga, fileName));
+
+                            #endregion
+
+                            #region Mapping
+
+                            NovicaPriloga novicaPriloga = new NovicaPriloga();
+
+                            novicaPriloga.ID_novicaPriloga = UpraviteljNovicaPriloga.GetNextIDNovicaPriloga();
+                            novicaPriloga.ID_novica = novica.ID_novica;
+                            novicaPriloga.Naslov = priloga.FileName;
+                            novicaPriloga.URLFile = pathForFile;
+
+                            #endregion
+
+                            #region Insert NovicaPriloga
+
+                            UpraviteljNovicaPriloga.InsertNovicaPriloga(novicaPriloga);
+
+                            #endregion
+                        }
+                    }
+                }
+
+                #endregion
+
                 Novica posNovica = UpraviteljNovica.VrniNovico(novica.ID_novica);
                 ViewBag.Data = posNovica;
+
+                List<NovicaPriloga> posPriloge = UpraviteljNovicaPriloga.VrniPrilogeZaNovico(novica.ID_novica);
+                ViewBag.Priloge = posPriloge;
 
                 //Obvestilo o uspehu akcije
                 GlobalNotifications.DodajObvestilo(GlobalNotifications.UspehOperacije);
@@ -1202,6 +1252,35 @@ namespace KKK_Zusterna.Controllers
                 #endregion
 
                 UpraviteljNovica.DeleteNovica(delNovica.ID_novica);
+
+                #region Delete NovicaPriloge
+
+                List<NovicaPriloga> priloge = UpraviteljNovicaPriloga.VrniPrilogeZaNovico(delNovica.ID_novica);
+                if(priloge != null && priloge.Count > 0)
+                {
+                    foreach (NovicaPriloga priloga in priloge)
+                    {
+                        #region Delete file
+
+                        //Delete File
+                        if (priloga.URLFile != "")
+                        {
+                            // code for deleting the file 
+                            var path = Server.MapPath(priloga.URLFile);
+                            System.IO.File.Delete(path);
+                        }
+
+                        #endregion
+
+                        #region Delete NovicaPriloga 
+
+                        UpraviteljNovicaPriloga.DeleteNovicaPriloga(priloga.ID_novicaPriloga);
+
+                        #endregion
+                    }
+                }
+
+                #endregion
 
                 List<NovicaGrid> seznamNovic = UpraviteljNovica.VrniNoviceFiltered("", "", "", "", "");
 
@@ -1273,7 +1352,7 @@ namespace KKK_Zusterna.Controllers
 
         [HttpPost, ValidateInput(false)]
         [Authorize]
-        public ActionResult InsertNovica(string Naslov, string Povzetek, string Vsebina, HttpPostedFileBase slika)
+        public ActionResult InsertNovica(string Naslov, string Povzetek, string Vsebina, HttpPostedFileBase slika, HttpPostedFileBase[] priloge)
         {
             try
             {
@@ -1324,8 +1403,54 @@ namespace KKK_Zusterna.Controllers
 
                 #endregion
 
+                #region NovicaPriloge
+
+                if (priloge != null && priloge.Count() > 0)
+                {
+                    foreach (HttpPostedFileBase priloga in priloge)
+                    {
+                        if (priloga != null && !System.IO.File.Exists(Server.MapPath(KKKZusternaEnum.SaveNovicaPriloga + priloga.FileName)))
+                        {
+                            #region Save file
+
+                            string pathForFile = "";
+
+                            // code for saving the image file to a physical location.
+                            var fileName = Path.GetFileName(priloga.FileName);
+                            var path = Path.Combine(Server.MapPath(KKKZusternaEnum.SaveNovicaPriloga), fileName);
+                            priloga.SaveAs(path);
+
+                            pathForFile = Url.Content(Path.Combine(KKKZusternaEnum.SaveNovicaPriloga, fileName));
+
+                            #endregion
+
+                            #region Mapping
+
+                            NovicaPriloga novicaPriloga = new NovicaPriloga();
+
+                            novicaPriloga.ID_novicaPriloga = UpraviteljNovicaPriloga.GetNextIDNovicaPriloga();
+                            novicaPriloga.ID_novica = novica.ID_novica;
+                            novicaPriloga.Naslov = priloga.FileName;
+                            novicaPriloga.URLFile = pathForFile;
+
+                            #endregion
+
+                            #region Insert NovicaPriloga
+
+                            UpraviteljNovicaPriloga.InsertNovicaPriloga(novicaPriloga);
+
+                            #endregion
+                        }
+                    }
+                }
+
+                #endregion
+
                 Novica shrNovica = UpraviteljNovica.VrniNovico(novica.ID_novica);
                 ViewBag.Data = shrNovica;
+
+                List<NovicaPriloga> shrPriloge = UpraviteljNovicaPriloga.VrniPrilogeZaNovico(novica.ID_novica);
+                ViewBag.Priloge = shrPriloge;
 
                 //Obvestilo o uspehu akcije
                 GlobalNotifications.DodajObvestilo(GlobalNotifications.UspehOperacije);
@@ -1336,6 +1461,57 @@ namespace KKK_Zusterna.Controllers
                 GlobalErrors.DodajNapako(ex.ToString());
                 MailHelper.SendMailForErrors("InsertNovica", ex.ToString());
 				logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
+            }
+
+            return View("NovicaPodrobnosti");
+        }
+
+        #endregion
+
+        #region Delete selected NovicaPriloga
+
+        [Authorize]
+        public ActionResult DeleteSelectedNovicaPriloga(int ID_novicaPriloga)
+        {
+            try
+            {
+                //Zbrisemo obvestila && napake
+                GlobalNotifications.ZbrisiObvestilo();
+                GlobalErrors.ZbrisiNapake();
+                GlobalWarnings.ZbrisiOpozorilo();
+
+                NovicaPriloga priloga = UpraviteljNovicaPriloga.VrniNovicaPriloga(ID_novicaPriloga);
+                int ID_novica = priloga.ID_novica;
+
+                #region Delete file
+
+                //Delete File
+                if (priloga.URLFile != "")
+                {
+                    // code for deleting the file 
+                    var path = Server.MapPath(priloga.URLFile);
+                    System.IO.File.Delete(path);
+                }
+
+                #endregion
+
+                UpraviteljNovicaPriloga.DeleteNovicaPriloga(ID_novicaPriloga);
+
+                Novica posNovica = UpraviteljNovica.VrniNovico(ID_novica);
+                ViewBag.Data = posNovica;
+
+                List<NovicaPriloga> posPriloge = UpraviteljNovicaPriloga.VrniPrilogeZaNovico(ID_novica);
+                ViewBag.Priloge = posPriloge;
+
+                //Obvestilo o uspehu akcije
+                GlobalNotifications.DodajObvestilo(GlobalNotifications.UspehOperacije);
+            }
+            catch (Exception ex)
+            {
+                GlobalErrors.ZbrisiNapake();
+                GlobalErrors.DodajNapako(ex.ToString());
+                MailHelper.SendMailForErrors("DeleteSelectedNovicaPriloga", ex.ToString());
+                logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
             }
 
             return View("NovicaPodrobnosti");
@@ -3803,7 +3979,6 @@ namespace KKK_Zusterna.Controllers
                 {
                     foreach (HttpPostedFileBase slika in Slike)
                     {
-
                         if(slika != null && !System.IO.File.Exists(Server.MapPath(KKKZusternaEnum.SaveGalerijaSlik + Naslov + slika.FileName)))
                         {
                             #region Save image
