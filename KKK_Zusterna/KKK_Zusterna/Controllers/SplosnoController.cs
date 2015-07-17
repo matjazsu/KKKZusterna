@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using KKK_Zusterna.Models;
 using KKK_Zusterna.Helper;
+using PagedList;
 using log4net;
 
 namespace KKK_Zusterna.Controllers
@@ -28,8 +29,13 @@ namespace KKK_Zusterna.Controllers
 
         #region Galerija slik
 
-        public ActionResult GalerijaSlik()
+        public ActionResult GalerijaSlik(int? page)
         {
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+
+            List<GalerijaKategorijaGrid> galerije = null;
+
             try
             {
                 //Zbrisemo obvestila && napake
@@ -37,9 +43,7 @@ namespace KKK_Zusterna.Controllers
                 GlobalErrors.ZbrisiNapake();
                 GlobalWarnings.ZbrisiOpozorilo();
 
-                List<GalerijaKategorijaGrid> seznam = UpraviteljGalerijaKategorija.VrniKategorijeSlik();
-
-                ViewBag.Data = seznam;
+                galerije = UpraviteljGalerijaKategorija.VrniKategorijeSlik();
 
                 //Obvestilo o uspehu akcije if TrenutniUporabnik != null
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -55,7 +59,7 @@ namespace KKK_Zusterna.Controllers
                 logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
             }
 
-            return View();
+            return View(galerije.ToPagedList(pageNumber, pageSize));
         }
 
         #endregion

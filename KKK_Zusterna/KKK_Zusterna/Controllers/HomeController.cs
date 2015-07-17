@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using KKK_Zusterna.Models;
 using KKK_Zusterna.Helper;
+using PagedList;
 using log4net;
 
 namespace KKK_Zusterna.Controllers
@@ -27,8 +28,13 @@ namespace KKK_Zusterna.Controllers
         #region Index
 
         //Render Novice/Index/Domov page
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+
+            List<NovicaGrid> novice = null;
+
             try
             {
                 //Zbrisemo obvestila && napake
@@ -37,10 +43,7 @@ namespace KKK_Zusterna.Controllers
                 GlobalWarnings.ZbrisiOpozorilo();
 
                 //Get novice
-                List<NovicaGrid> tmp = UpraviteljNovica.VrniNovice();
-
-                //Return List<Novice> to View
-                ViewBag.Data = tmp;
+                novice = UpraviteljNovica.VrniNovice();
 
                 //Obvestilo o uspehu akcije if TrenutniUporabnik != null
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -56,7 +59,7 @@ namespace KKK_Zusterna.Controllers
                 logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
             }
 
-            return View();
+            return View(novice.ToPagedList(pageNumber, pageSize));
         }
 
         #endregion

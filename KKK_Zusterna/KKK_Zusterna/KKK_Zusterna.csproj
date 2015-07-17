@@ -122,6 +122,15 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.SQLite, Version=1.0.91.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -133,13 +142,18 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.1.0.91.3\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -150,6 +164,18 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -219,6 +245,81 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bootstrap\css\bootstrap-fileupload.min.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap-wysihtml5-min.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\Bootstrap\css\jasny-bootstrap.min.css" />
+    <Content Include="Content\Bootstrap\css\lightbox-min.css" />
+    <Content Include="Content\Bootstrap\css\Origin\bootstrap-fileupload.css" />
+    <Content Include="Content\Bootstrap\css\Origin\bootstrap-responsive.css" />
+    <Content Include="Content\Bootstrap\css\Origin\bootstrap-wysihtml5.css" />
+    <Content Include="Content\Bootstrap\css\Origin\bootstrap.css" />
+    <Content Include="Content\Bootstrap\css\Origin\lightbox.css" />
+    <Content Include="Content\Bootstrap\holder\holder-min.js" />
+    <Content Include="Content\Bootstrap\holder\Origin\holder.js" />
+    <Content Include="Content\Bootstrap\img\facebook.png" />
+    <Content Include="Content\Bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Content\Bootstrap\img\google.png" />
+    <Content Include="Content\Bootstrap\img\linkedIn.png" />
+    <Content Include="Content\Bootstrap\img\twitter.png" />
+    <Content Include="Content\Bootstrap\js\bootstrap-alert-min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-button-min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-button.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-carousel-min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-collapse.min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-dropdown-min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-fileupload.min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-modal-min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-transition-min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-wysihtml5-min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\Bootstrap\js\builder.js" />
+    <Content Include="Content\Bootstrap\js\effects.js" />
+    <Content Include="Content\Bootstrap\js\jasny-bootstrap.min.js" />
+    <Content Include="Content\Bootstrap\js\jquery-1.7.2.min.js" />
+    <Content Include="Content\Bootstrap\js\jquery-min.js" />
+    <Content Include="Content\Bootstrap\js\lightbox-min.js" />
+    <Content Include="Content\Bootstrap\js\Origin\bootstrap-alert.js" />
+    <Content Include="Content\Bootstrap\js\Origin\bootstrap-carousel.js" />
+    <Content Include="Content\Bootstrap\js\Origin\bootstrap-collapse.js" />
+    <Content Include="Content\Bootstrap\js\Origin\bootstrap-dropdown.js" />
+    <Content Include="Content\Bootstrap\js\Origin\bootstrap-modal.js" />
+    <Content Include="Content\Bootstrap\js\Origin\bootstrap-transition.js" />
+    <Content Include="Content\Bootstrap\js\Origin\bootstrap-wysihtml5.js" />
+    <Content Include="Content\Bootstrap\js\Origin\bootstrap-wysiwyg.js" />
+    <Content Include="Content\Bootstrap\js\Origin\bootstrap.js" />
+    <Content Include="Content\Bootstrap\js\Origin\builder.js" />
+    <Content Include="Content\Bootstrap\js\Origin\effects.js" />
+    <Content Include="Content\Bootstrap\js\Origin\jquery.hotkeys.js" />
+    <Content Include="Content\Bootstrap\js\Origin\jquery.js" />
+    <Content Include="Content\Bootstrap\js\Origin\lightbox.js" />
+    <Content Include="Content\Bootstrap\js\Origin\prototype.js" />
+    <Content Include="Content\Bootstrap\js\Origin\scriptaculous.js" />
+    <Content Include="Content\Bootstrap\js\Origin\wysihtml5-0.3.0.js" />
+    <Content Include="Content\Bootstrap\js\prototype-min.js" />
+    <Content Include="Content\Bootstrap\js\scriptaculous.js" />
+    <Content Include="Content\Bootstrap\js\wysihtml5-0.3.0-min.js" />
+    <Content Include="Content\Bootstrap\css\PagedList.css" />
+    <Content Include="Content\SpletnaStran\Background\bg.png" />
+    <Content Include="Content\SpletnaStran\Favicon\favicon.ico" />
+    <Content Include="Content\SpletnaStran\Lightbox\close.gif" />
+    <Content Include="Content\SpletnaStran\Lightbox\closelabel.gif" />
+    <Content Include="Content\SpletnaStran\Lightbox\loading.gif" />
+    <Content Include="Content\SpletnaStran\Lightbox\nextlabel.gif" />
+    <Content Include="Content\SpletnaStran\Lightbox\prevlabel.gif" />
+    <Content Include="Content\SpletnaStran\Logotip\kajak30.jpg" />
+    <Content Include="Content\SpletnaStran\Logotip\kkk_logo.jpg" />
+    <Content Include="Content\SpletnaStran\Logotip\kkk_logo_2.jpg" />
+    <Content Include="Content\SpletnaStran\Logotip\kkk_logo_30.jpg" />
+    <Content Include="Content\SpletnaStran\NaslovneSlike\slide-01.jpg" />
+    <Content Include="Content\SpletnaStran\NaslovneSlike\slide-02.jpg" />
+    <Content Include="Content\SpletnaStran\NaslovneSlike\slide-03.jpg" />
+    <Content Include="Content\SpletnaStran\Sponzorji\Adriatic_Slovenica.jpg" />
+    <Content Include="Content\SpletnaStran\Sponzorji\logo_LK.gif" />
+    <Content Include="Content\SpletnaStran\Sponzorji\MOK_logotip.jpg" />
+    <Content Include="Content\SQL_Skripte\CreateTables.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
@@ -228,8 +329,7 @@
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\modernizr-1.7.js" />
-    <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -322,7 +422,25 @@
     <Content Include="Views\Tekmovanja\VrniTopRezultate.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bootstrap\img\Thumbs.db" />
+    <Content Include="Content\Logs\201410\20141029.WebApplication.log" />
+    <Content Include="Content\Logs\201501\20150105.WebApplication.log" />
+    <Content Include="Content\Logs\201507\20150701.WebApplication.log" />
+    <Content Include="Content\Logs\201507\20150702.WebApplication.log" />
+    <Content Include="Content\SpletnaStran\Background\Thumbs.db" />
+    <Content Include="Content\SpletnaStran\Lightbox\Thumbs.db" />
+    <Content Include="Content\SpletnaStran\Logotip\Thumbs.db" />
+    <Content Include="Content\SpletnaStran\NaslovneSlike\Thumbs.db" />
+    <Content Include="Content\SpletnaStran\Sponzorji\Thumbs.db" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Vsebina\GalerijaSlik\" />
+    <Folder Include="Content\Vsebina\NovicePriloge\" />
+    <Folder Include="Content\Vsebina\Novice\" />
+    <Folder Include="Content\Vsebina\ONas\" />
+    <Folder Include="Content\Vsebina\Rezultati\" />
+    <Folder Include="Content\Vsebina\Tekmovanja\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
