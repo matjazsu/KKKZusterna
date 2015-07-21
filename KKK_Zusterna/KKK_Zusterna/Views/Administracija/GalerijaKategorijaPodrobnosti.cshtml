@@ -125,7 +125,7 @@
                                     {
                                         <li class="span4">
                                             <a href="@ViewBag.Galerija[index].URLSlika" rel="lightbox[@ViewBag.Data.Naslov]" title="" class="thumbnail">
-                                                <img src="@ViewBag.Galerija[index].URLSlika" alt="" width="100%" height="100%">
+                                                <img class="lazy" data-original="@ViewBag.Galerija[index].URLSlika" alt="" width="100%" height="100%">
                                             </a>
                                             <br />
                                             <a class="btn btn-danger" href="@Url.Action("DeleteSelectedImageFromGalerija", "Administracija", new { ID_galerija = ViewBag.Galerija[index].ID_galerija })"><i class="icon-trash icon-white"></i>  Izbriši sliko</a>

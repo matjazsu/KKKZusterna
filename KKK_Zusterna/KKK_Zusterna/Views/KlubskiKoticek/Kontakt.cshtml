@@ -1,4 +1,6 @@
-﻿@{
+﻿@model KKK_Zusterna.Models.Kontakt
+
+@{
     ViewBag.Title = "Kajak kanu klub Žusterna";
 }
 
@@ -49,19 +51,17 @@
         }
     }
     
-    <div class="row-fluid">
-        <div class="span12">
-            <h3>Kontakt</h3>
-        </div>
-    </div>  
+    <ul class="breadcrumb alert alert-info">
+        <li class="active">Kontakt</li>
+    </ul> 
     
-    @if (ViewBag.Data != null)
+    @if (Model != null)
     {
         <div class="row-fluid">
             <div class="span12">
                 <form class="form-inline">
                     <label class="control-label"><b>E-mail:</b></label>
-                    <label class="control-label"><a href="mailto: @ViewBag.Data.Email">@ViewBag.Data.Email</a></label>
+                    <label class="control-label"><a href="mailto: @Model.Email">@Model.Email</a></label>
                 </form>
             </div>
         </div>
@@ -70,7 +70,7 @@
             <div class="span12">
                 <form class="form-inline">
                     <label class="control-label"><b>Tel.:</b></label>
-                    <label class="control-label">@ViewBag.Data.Telefon</label>
+                    <label class="control-label">@Model.Telefon</label>
                 </form>
             </div>
         </div>
@@ -79,7 +79,7 @@
             <div class="span12">
                 <form class="form-inline">
                     <label class="control-label"><b>Fax:</b></label>
-                    <label class="control-label">@ViewBag.Data.Fax</label>
+                    <label class="control-label">@Model.Fax</label>
                 </form>
             </div>
         </div>
@@ -88,7 +88,7 @@
             <div class="span12">
                 <form class="form-inline">
                     <label class="control-label"><b>Gsm:</b></label>
-                    <label class="control-label">@ViewBag.Data.GSM</label>
+                    <label class="control-label">@Model.GSM</label>
                 </form>
             </div>
         </div>
@@ -97,7 +97,7 @@
             <div class="span12">
                 <form class="form-inline">
                     <label class="control-label"><b>Naslov:</b></label>
-                    <label class="control-label">@ViewBag.Data.Naslov</label>
+                    <label class="control-label">@Model.Naslov</label>
                 </form>
             </div>
         </div>

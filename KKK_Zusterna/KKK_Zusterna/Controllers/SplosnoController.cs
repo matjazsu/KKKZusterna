@@ -66,8 +66,14 @@ namespace KKK_Zusterna.Controllers
 
         #region PrikaziGalerijo
 
-        public ActionResult PrikaziGalerijo(int ID_galerijaKategorija)
+        public ActionResult PrikaziGalerijo(int ID_galerijaKategorija, int? page)
         {
+            int pageSize = 9;
+            int pageNumber = (page ?? 1);
+
+            GalerijaKategorija galerijaKategorija = null;
+            List<Galerija> galerija = null;
+
             try
             {
                 //Zbrisemo obvestila && napake
@@ -76,11 +82,8 @@ namespace KKK_Zusterna.Controllers
                 GlobalWarnings.ZbrisiOpozorilo();
 
                 //Get galerija
-                GalerijaKategorija galerijaKategorija = UpraviteljGalerijaKategorija.VrniKategorijoSlik(ID_galerijaKategorija);
-                List<Galerija> galerija = UpraviteljGalerija.VrniGalerijoZaGalerijaKategorija(ID_galerijaKategorija);
-
-                ViewBag.Kategorija = galerijaKategorija;
-                ViewBag.Data = galerija;
+                galerijaKategorija = UpraviteljGalerijaKategorija.VrniKategorijoSlik(ID_galerijaKategorija);
+                galerija = UpraviteljGalerija.VrniGalerijoZaGalerijaKategorija(ID_galerijaKategorija);
 
                 //Obvestilo o uspehu akcije if TrenutniUporabnik != null
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -96,7 +99,7 @@ namespace KKK_Zusterna.Controllers
                 logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
             }
 
-            return View("Galerija");
+            return View("Galerija", Tuple.Create(galerijaKategorija, galerija.ToPagedList(pageNumber, pageSize)));
         }
 
         #endregion

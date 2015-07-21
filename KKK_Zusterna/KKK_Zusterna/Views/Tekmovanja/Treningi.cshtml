@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<KKK_Zusterna.Models.Trening>
+
+@{
     ViewBag.Title = "Kajak kanu klub Žusterna";
 }
 
@@ -49,21 +51,19 @@
         }
     }  
     
-    @if (ViewBag.Data != null)
+    @if (Model != null && Model.Count > 0)
     {
-        <div class="row-fluid">
-            <div class="span12">
-                <h3>Treningi</h3>
-            </div>
-        </div>
+        <ul class="breadcrumb alert alert-info">
+            <li class="active">Treningi</li>
+        </ul>
 
-        for (int i = 0; i < ViewBag.Data.Count; i++)
+        foreach (var trening in Model)
         {
             <div class="row-fluid">
                 <div class="span12">
                     <div class="row-fluid">
                         <div class="span12">
-                            <legend><a href="#">@ViewBag.Data[i].Naziv</a></legend>    
+                            <legend><a href="#">@trening.Naziv</a></legend>    
                         </div>
                     </div>
                     <div class="row-fluid">
@@ -81,52 +81,52 @@
                                 <tbody>
                                     <tr>
                                         <td>Ponedeljek</td>
-                                        <td>@ViewBag.Data[i].Pon_Dop_Od - @ViewBag.Data[i].Pon_Dop_Do</td>
-                                        <td>@ViewBag.Data[i].Pon_Dop_Tre</td>
-                                        <td>@ViewBag.Data[i].Pon_Pop_Od - @ViewBag.Data[i].Pon_Pop_Do</td>
-                                        <td>@ViewBag.Data[i].Pon_Pop_Tre</td>
+                                        <td>@trening.Pon_Dop_Od - @trening.Pon_Dop_Do</td>
+                                        <td>@trening.Pon_Dop_Tre</td>
+                                        <td>@trening.Pon_Pop_Od - @trening.Pon_Pop_Do</td>
+                                        <td>@trening.Pon_Pop_Tre</td>
                                     </tr>
                                     <tr>
                                         <td>Torek</td>
-                                        <td>@ViewBag.Data[i].Tor_Dop_Od - @ViewBag.Data[i].Tor_Dop_Do</td>
-                                        <td>@ViewBag.Data[i].Tor_Dop_Tre</td>
-                                        <td>@ViewBag.Data[i].Tor_Pop_Od - @ViewBag.Data[i].Tor_Pop_Do</td>
-                                        <td>@ViewBag.Data[i].Tor_Pop_Tre</td>
+                                        <td>@trening.Tor_Dop_Od - @trening.Tor_Dop_Do</td>
+                                        <td>@trening.Tor_Dop_Tre</td>
+                                        <td>@trening.Tor_Pop_Od - @trening.Tor_Pop_Do</td>
+                                        <td>@trening.Tor_Pop_Tre</td>
                                     </tr>
                                     <tr>
                                         <td>Sreda</td>
-                                        <td>@ViewBag.Data[i].Sre_Dop_Od - @ViewBag.Data[i].Sre_Dop_Do</td>
-                                        <td>@ViewBag.Data[i].Sre_Dop_Tre</td>
-                                        <td>@ViewBag.Data[i].Sre_Pop_Od - @ViewBag.Data[i].Sre_Pop_Do</td>
-                                        <td>@ViewBag.Data[i].Sre_Pop_Tre</td>
+                                        <td>@trening.Sre_Dop_Od - @trening.Sre_Dop_Do</td>
+                                        <td>@trening.Sre_Dop_Tre</td>
+                                        <td>@trening.Sre_Pop_Od - @trening.Sre_Pop_Do</td>
+                                        <td>@trening.Sre_Pop_Tre</td>
                                     </tr>
                                     <tr>
                                         <td>Četrtek</td>
-                                        <td>@ViewBag.Data[i].Cet_Dop_Od - @ViewBag.Data[i].Cet_Dop_Do</td>
-                                        <td>@ViewBag.Data[i].Cet_Dop_Tre</td>
-                                        <td>@ViewBag.Data[i].Cet_Pop_Od - @ViewBag.Data[i].Cet_Pop_Do</td>
-                                        <td>@ViewBag.Data[i].Cet_Pop_Tre</td>
+                                        <td>@trening.Cet_Dop_Od - @trening.Cet_Dop_Do</td>
+                                        <td>@trening.Cet_Dop_Tre</td>
+                                        <td>@trening.Cet_Pop_Od - @trening.Cet_Pop_Do</td>
+                                        <td>@trening.Cet_Pop_Tre</td>
                                     </tr>
                                     <tr>
                                         <td>Petek</td>
-                                        <td>@ViewBag.Data[i].Pet_Dop_Od - @ViewBag.Data[i].Pet_Dop_Do</td>
-                                        <td>@ViewBag.Data[i].Pet_Dop_Tre</td>
-                                        <td>@ViewBag.Data[i].Pet_Pop_Od - @ViewBag.Data[i].Pet_Pop_Do</td>
-                                        <td>@ViewBag.Data[i].Pet_Pop_Tre</td>
+                                        <td>@trening.Pet_Dop_Od - @trening.Pet_Dop_Do</td>
+                                        <td>@trening.Pet_Dop_Tre</td>
+                                        <td>@trening.Pet_Pop_Od - @trening.Pet_Pop_Do</td>
+                                        <td>@trening.Pet_Pop_Tre</td>
                                     </tr>
                                     <tr>
                                         <td>Sobota</td>
-                                        <td>@ViewBag.Data[i].Sob_Dop_Od - @ViewBag.Data[i].Sob_Dop_Do</td>
-                                        <td>@ViewBag.Data[i].Sob_Dop_Tre</td>
-                                        <td>@ViewBag.Data[i].Sob_Pop_Od - @ViewBag.Data[i].Sob_Pop_Do</td>
-                                        <td>@ViewBag.Data[i].Sob_Pop_Tre</td>
+                                        <td>@trening.Sob_Dop_Od - @trening.Sob_Dop_Do</td>
+                                        <td>@trening.Sob_Dop_Tre</td>
+                                        <td>@trening.Sob_Pop_Od - @trening.Sob_Pop_Do</td>
+                                        <td>@trening.Sob_Pop_Tre</td>
                                     </tr>
                                     <tr>
                                         <td>Nedelja</td>
-                                        <td>@ViewBag.Data[i].Ned_Dop_Od - @ViewBag.Data[i].Ned_Dop_Do</td>
-                                        <td>@ViewBag.Data[i].Ned_Dop_Tre</td>
-                                        <td>@ViewBag.Data[i].Ned_Pop_Od - @ViewBag.Data[i].Ned_Pop_Do</td>
-                                        <td>@ViewBag.Data[i].Ned_Pop_Tre</td>
+                                        <td>@trening.Ned_Dop_Od - @trening.Ned_Dop_Do</td>
+                                        <td>@trening.Ned_Dop_Tre</td>
+                                        <td>@trening.Ned_Pop_Od - @trening.Ned_Pop_Do</td>
+                                        <td>@trening.Ned_Pop_Tre</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -148,11 +148,9 @@
             </div>
         </div>
         
-        <div class="row-fluid">
-            <div class="span12">
-                <h3>Treningi</h3>
-            </div>
-        </div>
+        <ul class="breadcrumb alert alert-info">
+          <li class="active">Treningi</li>
+        </ul>
     }
       
 </div>

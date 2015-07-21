@@ -69,6 +69,9 @@ namespace KKK_Zusterna.Controllers
         //Render Novica page
         public ActionResult PrikaziNovico(int ID_novica)
         {
+            Novica novica = null;
+            List<NovicaPriloga> priloge = null;
+
             try
             {
                 //Zbrisemo obvestila && napake
@@ -77,11 +80,10 @@ namespace KKK_Zusterna.Controllers
                 GlobalWarnings.ZbrisiOpozorilo();
 
                 //Get Novica
-                Novica novica = UpraviteljNovica.VrniNovico(ID_novica);
-                ViewBag.Data = novica;
+                novica = UpraviteljNovica.VrniNovico(ID_novica);
 
-                List<NovicaPriloga> priloge = UpraviteljNovicaPriloga.VrniPrilogeZaNovico(ID_novica);
-                ViewBag.Priloge = priloge;
+                //Get priloge
+                priloge = UpraviteljNovicaPriloga.VrniPrilogeZaNovico(ID_novica);
 
                 //Obvestilo o uspehu akcije if TrenutniUporabnik != null
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -97,7 +99,7 @@ namespace KKK_Zusterna.Controllers
                 logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
             }
 
-            return View();
+            return View(Tuple.Create(novica, priloge));
         }
 
         #endregion

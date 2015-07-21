@@ -15,6 +15,7 @@
     <link href="@Url.Content("~/Content/Bootstrap/css/bootstrap-wysihtml5-min.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/Bootstrap/css/lightbox-min.css")" rel="stylesheet" type="text/css" media="screen">
     <link href="@Url.Content("~/Content/Bootstrap/css/PagedList.css")" rel="stylesheet" type="text/css" media="screen">
+    <link href="@Url.Content("~/Content/Bootstrap/clockpicker/clockpicker.css")" rel="stylesheet" type="text/css" media="screen">
     <link rel="icon" type="image/png" href="@Url.Content("~/Content/SpletnaStran/Favicon/favicon.ico")" />
 
     <style>
@@ -466,7 +467,7 @@
 
                 <!-- Body
                     ================================================== -->
-                <div class="span8">
+                <div id="bodyZusterna" class="span8">
                     @RenderBody()    
                 </div>
                 
@@ -528,7 +529,7 @@
                         <p class="pull-right">
                             <a href="#">Na vrh</a>
                         </p>
-                        <p>&copy; Kajak kanu klub Žusterna 2014</p>  
+                        <p>&copy; Kajak kanu klub Žusterna 2015</p>  
                     </div>
                 </div>
             </footer>
@@ -550,6 +551,8 @@
         <script src="@Url.Content("~/Content/Bootstrap/js/bootstrap-carousel-min.js")"></script>
         <script src="@Url.Content("~/Content/Bootstrap/js/bootstrap-fileupload.min.js")"></script>
         <script src="@Url.Content("~/Content/Bootstrap/holder/holder-min.js")"></script>
+        <script src="@Url.Content("~/Content/Bootstrap/lazyLoad/jquery.lazyload.js")"></script>
+        <script src="@Url.Content("~/Content/Bootstrap/clockpicker/clockpicker.js")"></script>
         
         <!--Lightbox-->
         <script src="@Url.Content("~/Content/Bootstrap/js/prototype-min.js")"></script>
@@ -672,6 +675,38 @@
                     })
                 })
             } (window.jQuery)
+        </script>
+        
+        <script type="text/javascript">
+            !function ($) {
+                $(function () {
+                    $("img.lazy").lazyload({
+                        effect: "fadeIn"
+                    });
+                });
+            }(window.jQuery)
+        </script>
+        
+        <script type="text/javascript">
+            !function ($) {
+                $(function () {
+                    $('.clockpicker').clockpicker({
+                        donetext: 'Shrani'
+                    });
+                });
+            }(window.jQuery)
+        </script>
+        
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-65328770-1', 'auto');
+            ga('send', 'pageview');
         </script>
 
     </body>

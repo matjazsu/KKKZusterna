@@ -12,6 +12,7 @@ using KKK_Zusterna.Helper;
 using KKK_Zusterna.Models;
 using System.Drawing;
 using KKK_Zusterna.Enums;
+using PagedList;
 using log4net;
 using System.Reflection;
 
@@ -55,6 +56,11 @@ namespace KKK_Zusterna.Controllers
         [HttpPost]
         public ActionResult Prijava(string email, string geslo)
         {
+            int pageSize = 4;
+            int pageNumber = 1;
+
+            List<NovicaGrid> novice = null;
+
             try
             {
                 //Zbrisemo obvestila && napake
@@ -63,10 +69,7 @@ namespace KKK_Zusterna.Controllers
                 GlobalWarnings.ZbrisiOpozorilo();
 
                 //Get novice
-                List<NovicaGrid> tmp = UpraviteljNovica.VrniNovice();
-
-                //Return List<Novice> to View
-                ViewBag.Data = tmp;
+                novice = UpraviteljNovica.VrniNovice();
 
                 //Get uporabnik
                 Uporabnik m_trenutniUporabnik = UpraviteljUporabnik.VrniUporabnika(email, geslo);
@@ -87,7 +90,7 @@ namespace KKK_Zusterna.Controllers
                     GlobalErrors.DodajNapako(GlobalErrors.napakaPrijava);
                     logger.Info("User " + email + " is not a valid user!");
 
-                    return View("../Home/Index");
+                    return View("../Home/Index", novice.ToPagedList(pageNumber, pageSize));
                 }
             }
             catch (Exception ex)
@@ -97,7 +100,7 @@ namespace KKK_Zusterna.Controllers
                 MailHelper.SendMailForErrors("Prijava", ex.ToString());
                 logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
 
-                return View("../Home/Index");
+                return View("../Home/Index", novice.ToPagedList(pageNumber, pageSize));
             }
         }
 

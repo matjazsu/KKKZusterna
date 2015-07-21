@@ -1,4 +1,7 @@
-﻿@{
+﻿@model Tuple<KKK_Zusterna.Models.LetoRezultati, PagedList.IPagedList<KKK_Zusterna.Models.Rezultati>>
+@using PagedList.Mvc;       
+
+@{
     ViewBag.Title = "Kajak kanu klub Žusterna";
 }
 
@@ -49,60 +52,56 @@
         }
     }  
     
-    @if (ViewBag.Data != null && ViewBag.Data.Count > 0)
+    @if (Model.Item2 != null && Model.Item2.Count > 0)
     {
-        <div class="row-fluid">
-            <div class="span12">
-                <h3>Rezultati - @ViewBag.LetoRezultati.Leto</h3>
-            </div>
-        </div>
-        
-        for (int i = 0; i < ViewBag.Data.Count; i++)
+        <ul class="breadcrumb alert alert-info">
+            <li><a href="@Url.Action("Rezultati", "Tekmovanja")">Rezultati</a> <span class="divider">/</span></li>
+            <li class="active">@Model.Item1.Leto</li>
+        </ul>
+
+        foreach (var rezultat in Model.Item2)
         {
             <div class="row-fluid">
                 <div class="span12">
-                    <legend>@ViewBag.Data[i].Naslov:</legend>    
+                    <legend>@rezultat.Naslov:</legend>    
                 </div>
             </div>
             <div class="row-fluid">
                 <div class="span12">
-                    <p>@(new HtmlString(ViewBag.Data[i].Vsebina))</p>    
+                    <p>@(new HtmlString(rezultat.Vsebina))</p>    
                 </div>
             </div>
-            if (!string.IsNullOrEmpty(ViewBag.Data[i].URLFile))
+            if (!string.IsNullOrEmpty(rezultat.URLFile))
             {
                 <div class="row-fluid">
                     <div class="span12">
-                        @if (!string.IsNullOrEmpty(ViewBag.Data[i].FileName))
+                        @if (!string.IsNullOrEmpty(rezultat.FileName))
                         {
-                            <p>Priloga: <a href="@Url.Content(@ViewBag.Data[i].URLFile)">@ViewBag.Data[i].FileName</a></p>
+                            <p>Priloga: <a href="@Url.Content(rezultat.URLFile)">@rezultat.FileName</a></p>
                         }
                         else
                         {
-                            <p>Priloga: <a href="@Url.Content(@ViewBag.Data[i].URLFile)">@ViewBag.Data[i].URLFile</a></p>
+                            <p>Priloga: <a href="@Url.Content(rezultat.URLFile)">@rezultat.URLFile</a></p>
                         }
                     </div>
                 </div>   
             }
             <div class="row-fluid">
+                <div class="span12">
+                    <span class="muted">Objavil: @rezultat.Spremenil</span>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <span class="muted">Datum objave: @rezultat.SpremenilDatum</span>
+                </div>
+            </div>
+            <div class="row-fluid">
                 <div class="span12"></div>
             </div>
         }
-        <div class="row-fluid">
-            <div class="span12">
-                <legend>Operacije:</legend>    
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12">
-                <a class="btn btn-primary" href="@Url.Action("Rezultati", "Tekmovanja")"><i class="icon-arrow-left icon-white"></i>  Nazaj</a>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12">
-                        
-            </div>
-        </div>
+        
+        @Html.PagedListPager(Model.Item2, page => Url.Action("PrikaziRezultate", "Tekmovanja", new { ID_letoRezultati = Model.Item1.ID_letoRezultati, page }))
     }
     else
     {
@@ -115,27 +114,10 @@
             </div>
         </div>
         
-        <div class="row-fluid">
-            <div class="span12">
-                <h3>Rezultati - @ViewBag.LetoRezultati.Leto</h3>
-            </div>
-        </div>
-        
-        <div class="row-fluid">
-            <div class="span12">
-                <legend>Operacije:</legend>    
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12">
-                <a class="btn btn-primary" href="@Url.Action("Rezultati", "Tekmovanja")"><i class="icon-arrow-left icon-white"></i>  Nazaj</a>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12">
-                        
-            </div>
-        </div>   
+        <ul class="breadcrumb alert alert-info">
+          <li><a href="@Url.Action("Rezultati", "Tekmovanja")">Rezultati</a> <span class="divider">/</span></li>
+          <li class="active">@Model.Item1.Leto</li>
+        </ul> 
     }
     
       

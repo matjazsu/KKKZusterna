@@ -31,6 +31,8 @@ namespace KKK_Zusterna.Controllers
 
         public ActionResult ONas()
         {
+            ONas oNas = null;
+
             try
             {
                 //Zbrisemo obvestila && napake
@@ -38,8 +40,7 @@ namespace KKK_Zusterna.Controllers
                 GlobalErrors.ZbrisiNapake();
                 GlobalWarnings.ZbrisiOpozorilo();
 
-                ONas oNas = UpraviteljONas.VrniONas();
-                ViewBag.Data = oNas;
+                oNas = UpraviteljONas.VrniONas();
 
                 //Obvestilo o uspehu akcije if TrenutniUporabnik != null
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -55,7 +56,7 @@ namespace KKK_Zusterna.Controllers
                 logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
             }
 
-            return View();
+            return View(oNas);
         }
 
         #endregion
@@ -66,6 +67,8 @@ namespace KKK_Zusterna.Controllers
 
         public ActionResult Kontakt()
         {
+            Kontakt kontakt = null;
+
             try
             {
                 //Zbrisemo obvestila && napake
@@ -73,8 +76,7 @@ namespace KKK_Zusterna.Controllers
                 GlobalErrors.ZbrisiNapake();
                 GlobalWarnings.ZbrisiOpozorilo();
 
-                Kontakt kontakt = UpraviteljKontakt.VrniKontakt();
-                ViewBag.Data = kontakt;
+                kontakt = UpraviteljKontakt.VrniKontakt();
 
                 //Obvestilo o uspehu akcije if TrenutniUporabnik != null
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -90,7 +92,7 @@ namespace KKK_Zusterna.Controllers
                 logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
             }
 
-            return View();
+            return View(kontakt);
         }
 
         #endregion
@@ -132,6 +134,8 @@ namespace KKK_Zusterna.Controllers
 
         public ActionResult Povezave()
         {
+            List<PovezavePlus> seznamForView = null;
+
             try
             {
                 //Zbrisemo obvestila && napake
@@ -141,7 +145,7 @@ namespace KKK_Zusterna.Controllers
 
                 #region Get data
 
-                List<PovezavePlus> seznamForView = new List<PovezavePlus>();
+                seznamForView = new List<PovezavePlus>();
 
                 List<KategorijaPovezavGrid> seznamKategorijPovezav = UpraviteljKategorijPovezav.VrniKategorijePovezav();
                 foreach (KategorijaPovezavGrid kategorijaPovezav in seznamKategorijPovezav)
@@ -165,8 +169,6 @@ namespace KKK_Zusterna.Controllers
 
                 #endregion
 
-                ViewBag.Data = seznamForView;
-
                 //Obvestilo o uspehu akcije if TrenutniUporabnik != null
                 if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
@@ -182,7 +184,7 @@ namespace KKK_Zusterna.Controllers
                 logger.Error("ERROR in method " + MethodInfo.GetCurrentMethod() + ": " + ex);
             }
 
-            return View();
+            return View(seznamForView);
         }
 
         #endregion
